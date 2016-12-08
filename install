@@ -111,7 +111,7 @@ fi
 
 echo -n "Input port for PhpMyAdmin [ENTER]: "
 read aishee_port
-if [ "$aishee_port" = "" ] || [ "$aishee_port" = "80" ] || [ "$aishee_port" = "443" ] || [ "$aishee_port" = "22" ] || [ "$aishee_port" = "3306" ] || [ "$aishee_port" = "25" ] || [ "$aishee_port" = "465" ] || [ "$aishee_port" = "587" ]; then
+if [ "$aishee_port" = "" ] || [ "$aishee_port" = "80" ] || [ "$aishee_port" = "443" ] || [ "$aishee_port" = "22" ] || [ "$aishee_port" = "3306" ] || [ "$aishee_port" = "25" ] || [ "$aishee_port" = "465" ] || [ "$aishee_port" = "587" ] || [ "$aishee_port" = "2411" ]; then
 	aishee_port="2313"
 echo "Script default port: 2313"
 fi
@@ -844,7 +844,7 @@ systemctl start iptables
 systemctl start ip6tables
 
 #Change port SSH
-sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config
+sed -i 's/#Port 22/Port 2411/g' /etc/ssh/sshd_config
 
 if [ -f /etc/sysconfig/iptables ]; then
 systemctl start  iptables.service
@@ -855,6 +855,7 @@ iptables -I INPUT -p tcp --dport 443 -j ACCEPT
 iptables -I INPUT -p tcp --dport 465 -j ACCEPT
 iptables -I INPUT -p tcp --dport 587 -j ACCEPT
 iptables -I INPUT -p tcp --dport $aishee_port -j ACCEPT
+iptables -I INPUT -p tcp --dport 2411 -j ACCEPT
 service iptables save
 fi
 
